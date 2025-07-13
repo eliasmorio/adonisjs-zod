@@ -7,52 +7,36 @@
  * file that was distributed with this source code.
  */
 
-import type { ApplicationService } from '../src/types.js'
-import { Request, RequestValidator } from '../modules/http/main.js'
-import { FileRuleValidationOptions, VineMultipartFile } from '../src/vine.js'
-
-/**
- * Extend VineJS
- */
-declare module '@vinejs/vine' {
-  interface Vine {
-    file(options?: FileRuleValidationOptions): VineMultipartFile
-  }
-}
+import type { ApplicationService } from '@adonisjs/core/types'
+import { Request } from '@adonisjs/core/http'
+import { ZodRequestValidator } from '../src/zod_request_validator.js'
 
 /**
  * Extend HTTP request class
  */
 declare module '@adonisjs/core/http' {
-  interface Request extends RequestValidator {}
+  interface Request {
+    validateUsing: ZodRequestValidator['validateUsing']
+  }
 }
 
 /**
- * The Edge service provider configures Edge to work within
+ * The Zod service provider configures Zod to work within
  * an AdonisJS application environment
  */
-export default class VineJSServiceProvider {
-  constructor(protected app: ApplicationService) {
-    this.app.usingVineJS = true
-  }
+export default class ZodServiceProvider {
+  constructor(protected app: ApplicationService) {}
 
   boot() {
-    const experimentalFlags = this.app.experimentalFlags
-
-    /**
-     * The file method is used to validate a field to be a valid
-     * multipart file.
-     */
-    Vine.macro('file', function (this: Vine, options) {
-      return new VineMultipartFile(options)
-    })
-
     /**
      * The validate method can be used to validate the request
-     * data for the current request using VineJS validators
+     * data for the current request using Zod validators
      */
     Request.macro('validateUsing', function (this: Request, ...args) {
-      return new RequestValidator(this.ctx!, experimentalFlags).validateUsing(...args)
+      if (!this.ctx) {
+        throw new Error('Request context is not available')
+      }
+      return new ZodRequestValidator(this.ctx).validateUsing(...args)
     })
   }
 }
