@@ -24,16 +24,15 @@ export class ZodRequestValidator {
 
   /**
    * The validate method can be used to validate the request
-   * data for the current request using VineJS validators
+   * data for the current request using Zod validators
    */
   validateUsing<Schema extends ZodType>(validator: Schema): Promise<z.output<Schema>> {
-    const requestBody = this.#ctx.request.body()
     /**
-     *
      * Data to validate
      */
     const data = {
-      ...requestBody,
+      ...this.#ctx.request.all(),
+      ...this.#ctx.request.allFiles(),
       params: this.#ctx.request.params(),
       headers: this.#ctx.request.headers(),
       cookies: this.#ctx.request.cookiesList(),
