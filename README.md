@@ -175,6 +175,7 @@ export default class HttpExceptionHandler extends errors.HttpExceptionHandler {
 
 ### Planned Features
 
+- [ ] **ace add command**: Add support for registering by using the node ace add command
 - [ ] **Tuyau Integration**: Generate Tuyau api and types with this zod schema
 - [ ] **Custom File Validators**: Enhanced file validation similar to VineJS file validators
   - File size validation
