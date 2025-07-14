@@ -32,7 +32,6 @@ export class ZodRequestValidator {
      */
     const data = {
       ...this.#ctx.request.all(),
-      ...this.#ctx.request.allFiles(),
       params: this.#ctx.request.params(),
       headers: this.#ctx.request.headers(),
       cookies: this.#ctx.request.cookiesList(),
