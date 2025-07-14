@@ -2,13 +2,15 @@
 
 A lightweight, type-safe request validation package for AdonisJS that leverages the power of [Zod](https://zod.dev/) schemas instead of VineJS.
 
-## Features
+This package extends AdonisJS's existing validation pattern by adding support for Zod schemas while maintaining the familiar `request.validateUsing()` API. Instead of learning VineJS syntax, you can use Zod's powerful type-safe validation directly in your AdonisJS controllers.
 
-- 🔍 **Type-safe validation**: Full TypeScript support with inferred types from Zod schemas
-- 🚀 **Easy integration**: Seamlessly integrates with AdonisJS request lifecycle
-- 📦 **Comprehensive validation**: Validates request body, files, params, headers, and cookies
-- 🎯 **Familiar API**: Simple `validateUsing()` method added to AdonisJS request object
-- 🛠 **Flexible**: Use any Zod schema, including complex nested validations
+```typescript
+// Instead of VineJS
+const data = await request.validateUsing(vine.compile(vineSchema))
+
+// Use Zod directly
+const data = await request.validateUsing(zodSchema)
+```
 
 ## Installation
 
