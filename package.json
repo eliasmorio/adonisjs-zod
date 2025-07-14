@@ -1,9 +1,13 @@
 {
   "name": "@emorio/zod-validator",
   "description": "Zod request validator for AdonisJS",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "engines": {
     "node": ">=20.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eliasmorio/adonisjs-zod.git"
   },
   "type": "module",
   "files": [
