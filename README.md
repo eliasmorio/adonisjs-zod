@@ -178,20 +178,6 @@ export default class HttpExceptionHandler extends errors.HttpExceptionHandler {
 - [ ] **ace add command**: Add support for registering by using the node ace add command
 - [ ] **Tuyau Integration**: Generate Tuyau api and types with this zod schema
 - [ ] **Custom File Validators**: Enhanced file validation similar to VineJS file validators
-  - File size validation
-  - MIME type validation
-  - Image dimension validation
-  - Custom file upload rules
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
 
 ## Testing
 
