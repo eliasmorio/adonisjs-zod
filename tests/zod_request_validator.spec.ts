@@ -11,15 +11,12 @@ import { test } from '@japa/runner'
 
 import { IgnitorFactory } from '@adonisjs/core/factories'
 import { TestUtilsFactory } from '@adonisjs/core/factories'
-import { z, ZodError } from 'zod'
+import { z } from 'zod'
 
 const BASE_URL = new URL('./tmp/', import.meta.url)
 
 test.group('Request validator', () => {
-  test('perform validation on request data using request validator', async ({
-    assert,
-    expectTypeOf,
-  }) => {
+  test('perform validation on request data using request validator', async ({ assert }) => {
     assert.plan(1)
 
     const ignitor = new IgnitorFactory()

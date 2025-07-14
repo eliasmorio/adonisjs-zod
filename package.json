@@ -1,5 +1,6 @@
 {
   "name": "@emorio/zod-validator",
+  "private": true,
   "description": "Zod request validator for AdonisJS",
   "version": "0.0.0",
   "engines": {
@@ -17,7 +18,8 @@
   ],
   "exports": {
     ".": "./build/index.js",
-    "./types": "./build/src/types.js"
+    "./zod_provider": "./build/providers/zod_provider.js",
+    "./zod_request_validator": "./build/src/zod_request_validator.js"
   },
   "scripts": {
     "clean": "del-cli build",
