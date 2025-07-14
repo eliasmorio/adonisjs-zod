@@ -1,41 +1,44 @@
-name: CI/CD Pipeline
+name: Release
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
   release:
     types: [published]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - run: npm install
-      - run: npm run lint
-      - run: npm test
-      - run: npm run build
-
   publish:
-    needs: test
+    name: Publish to NPM
     runs-on: ubuntu-latest
-    if: github.event_name == 'release'
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
 
-      - run: npm ci
-      - run: npm run build
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build package
+        run: npm run build
 
       - name: Publish to NPM
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create deployment summary
+        run: |
+          echo "## 🚀 Release Published" >> $GITHUB_STEP_SUMMARY
+          echo "- **Package**: \`${{ env.PACKAGE_NAME }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Version**: \`${{ github.event.release.tag_name }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **NPM**: https://www.npmjs.com/package/@emorio/zod-validator" >> $GITHUB_STEP_SUMMARY
+        env:
+          PACKAGE_NAME: '@emorio/zod-validator'
